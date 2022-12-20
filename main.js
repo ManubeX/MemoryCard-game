@@ -11,12 +11,16 @@ const board = document.querySelector(".board");
 const scoreItem = document.querySelector(".score-board__item-score");
 const timer = document.querySelector(".score-board__item-time");
 const finishDisplay = document.querySelector('.finish-display');
+const seconds = timer.querySelector('.seconds');
+const minutes = timer.querySelector('.minutes');
+
 
 const fragment = document.createDocumentFragment();
 
 const flipedCards = [];
 let scoreCounter = 0;
-let totalTime=0;
+let secondsCounter = 0;
+let minutesCounter = 0;
 let timeInterval = null;
 
 startBtn.addEventListener("click", initGame);
@@ -31,8 +35,10 @@ function initGame() {
 function resetGame() {
     board.innerHTML = "";
     clearInterval(timeInterval);
-    totalTime = 0;
-    timer.textContent = totalTime;
+    minutesCounter = 0;
+    secondsCounter = 0;
+    minutes.textContent = minutesCounter.toString().padStart(2, "0");
+    seconds.textContent = secondsCounter.toString().padStart(2, "0");
     scoreCounter = 0;
     scoreItem.textContent = scoreCounter;
     finishDisplay.classList.add("hide");
@@ -122,6 +128,13 @@ function updateScoreCounter(score) {
 }
 
 function updateTime() {
-    totalTime ++; 
-    timer.textContent = totalTime;
+    secondsCounter ++; 
+    if(secondsCounter === 60 ){
+      minutesCounter++;
+      secondsCounter = 0;
+    }
+    minutes.textContent = minutesCounter.toString().padStart(2, "0");
+    seconds.textContent = secondsCounter.toString().padStart(2, "0");
 }
+
+
